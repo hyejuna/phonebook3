@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.javaex.dao.PhoneDao;
 import com.javaex.vo.PersonVo;
@@ -18,7 +20,7 @@ public class PhoneController {
 	@RequestMapping(value="/writeForm", method = {RequestMethod.GET, RequestMethod.POST})
 	public String writeForm() { // 포워드할 주소 리턴할꺼라 String
 		System.out.println("PhoneController>writeForm");
-		return "/WEB-INF/views/writeForm.jsp";
+		return "writeForm";
 	}
 	
 	
@@ -68,9 +70,24 @@ public class PhoneController {
 		//컨트롤러에서 ds로 데이터 보냄
 		model.addAttribute("personList", personList); //model
 		
-		return "/WEB-INF/views/list.jsp"; //view
+		return "list"; //view
 	}
 	
+	@RequestMapping(value="/test", method = {RequestMethod.GET, RequestMethod.POST})
+	public String test(@RequestParam(value="name") String name,
+					   @RequestParam(value="age", required = false, defaultValue="-1") int age) {
+		
+		System.out.println(name);
+		System.out.println(age);
+		return "/WEB-INF/views/writeForm.jsp";
+	}
+	
+	@RequestMapping(value="/view/{no}", method = {RequestMethod.GET, RequestMethod.POST})
+	public String view(@PathVariable("no") int no) {
+		
+		System.out.println(no + "번글 가져오기");
+		return "/WEB-INF/views/writeForm.jsp";
+	}
 	
 	
 
